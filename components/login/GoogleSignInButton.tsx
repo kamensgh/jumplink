@@ -1,8 +1,23 @@
 'use client';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import { setEmail, setImage, setName } from '@/lib/features/userSlice';
 
 function GoogleSignInButton() {
+
+  // const session = useSession()
+
+  // console.log(session);
+  
+
+
+
+  // const dispatch = useDispatch();
+  // dispatch(setName(session?.user?.name));
+  // dispatch(setEmail(session?.user?.email));
+  // dispatch(setImage(session?.user?.image));
+
   return (
     <>
       <button
