@@ -71,6 +71,88 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-black text-foreground;
   }
+
+  .slider-card-outer{
+    @apply 
+    mb-10
+    overflow-x-auto
+    rounded-lg
+    bg-black
+    w-full
+    flex
+    gap-9
+  }
+
+   .slider-inner{
+      @apply 
+      lg:min-w-52
+     
+    }
+
+    .slider-image{
+      @apply
+      rounded-lg
+      overflow-hidden
+      relative
+    }
+
+    .slider-image img{
+      @apply
+      w-full
+    }
+
+    .slider-badge{
+      @apply
+      text-white
+      bg-destructive
+      inline-block
+      px-2
+      py-1
+      rounded-full
+      text-xs
+      absolute
+      z-10
+      bottom-3
+      left-2
+    }
+
+    .slider-text{
+      @apply
+      text-white
+      text-sm
+      text-center
+      z-10
+      bottom-3
+      left-2
+      py-2
+    }
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+@layer utilities {
+    /* Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
 }
