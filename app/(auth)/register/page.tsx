@@ -12,6 +12,7 @@ const Register = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
+    setError('');
     const email = e.target[0].value;
     const password = e.target[1].value;
 
@@ -30,6 +31,8 @@ const Register = () => {
       return;
     }
 
+    setLoading(true);
+
     try {
       const res = await fetch('/api/register', {
         method: 'POST',
@@ -44,6 +47,12 @@ const Register = () => {
 
       if (res.status === 400) {
         setError('Email already registered');
+        setLoading(false);
+      }
+
+      if (res.status === 500) {
+        setError('Something went wrong, please try again');
+        setLoading(false);
       }
 
       if (res.status === 200) {
@@ -52,6 +61,7 @@ const Register = () => {
       }
     } catch (error) {
       setError('Something went wrong, please try again');
+      setLoading(false);
     }
   };
   return (
@@ -72,7 +82,7 @@ const Register = () => {
                 <div>
                   <div className="group relative rounded-lg border focus-within:border-sky-200 px-3 pb-1.5 pt-2.5 duration-200 focus-within:ring focus-within:ring-sky-300/30">
                     <div className="flex justify-between">
-                      <div className="absolute right-3 text-green-200">
+                      <div className="absolute right-3 text-green-200 hidden">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -91,7 +101,6 @@ const Register = () => {
                       type="text"
                       name="email"
                       placeholder="Email Address"
-                      autoComplete="off"
                       className="block text-white w-full border-0 bg-transparent p-0 text-sm file:my-1 file:rounded-full file:border-0 file:bg-accent file:px-4 file:py-2 file:font-medium placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 sm:leading-7 text-foreground"
                     />
                   </div>
@@ -101,7 +110,7 @@ const Register = () => {
                 <div>
                   <div className="group relative rounded-lg border focus-within:border-sky-200 px-3 pb-1.5 pt-2.5 duration-200 focus-within:ring focus-within:ring-sky-300/30">
                     <div className="flex justify-between">
-                      <div className="absolute right-3 text-green-200">
+                      <div className="absolute right-3 text-green-200 hidden">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -128,11 +137,13 @@ const Register = () => {
                 </div>
               </div>
               <div>
-                <p className=" text-red-700">{error && error}</p>
+                <p className=" text-red-700 mt-4">{error && error}</p>
               </div>
-              <div className="mt-4 flex items-center justify-end gap-x-2">
+              <div className="mt-6 flex items-center justify-end gap-x-2">
                 <Link
-                  className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:ring hover:ring-white h-10 px-4 py-2 duration-200"
+                  className={`inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:ring hover:ring-white h-10 px-4 py-2 duration-200 ${
+                    loading ? 'pointer-events-none' : ''
+                  }`}
                   href="/"
                 >
                   Login
@@ -140,8 +151,9 @@ const Register = () => {
                 <button
                   className="font-semibold hover:bg-black hover:text-white hover:ring hover:ring-white transition duration-300 inline-flex items-center justify-center rounded-md text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-black h-10 px-4 py-2"
                   type="submit"
+                  disabled={loading}
                 >
-                  Register
+                  {loading ? 'One sec...' : 'Register'}
                 </button>
               </div>
             </div>

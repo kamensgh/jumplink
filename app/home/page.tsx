@@ -4,13 +4,21 @@ import List from '@/components/video/List';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import React from 'react';
+import { movieType } from '@/lib/utils';
+
+export const getMovies = async () => {
+  const res = await fetch('http://localhost:3004/movies');
+  return res.json();
+};
 
 async function Home() {
-  const session = await getServerSession();
+  const latestMovies = await getMovies();
 
-  if (!session) {
-    redirect('/');
+  function filterMovies(latestMovies: [movieType]) {
+    return latestMovies.filter((movie) => movie.year >= 2000);
   }
+
+const latestMovies2023 = filterMovies(latestMovies);
   return (
     <div>
       <Banner />
@@ -19,7 +27,7 @@ async function Home() {
 
         <div className="container">
           <div>
-            <List />
+            <List data={latestMovies2023} />
           </div>
         </div>
       </div>

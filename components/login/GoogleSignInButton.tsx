@@ -1,17 +1,13 @@
 'use client';
 import { signIn, useSession } from 'next-auth/react';
-import React from 'react'
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setEmail, setImage, setName } from '@/lib/features/userSlice';
 
 function GoogleSignInButton() {
-
   // const session = useSession()
 
   // console.log(session);
-  
-
-
 
   // const dispatch = useDispatch();
   // dispatch(setName(session?.user?.name));
@@ -24,6 +20,7 @@ function GoogleSignInButton() {
         onClick={() => signIn('google')}
         aria-label="Continue with google"
         role="button"
+        type="button"
         className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-white flex items-center w-full"
       >
         <svg
@@ -56,4 +53,4 @@ function GoogleSignInButton() {
   );
 }
 
-export default GoogleSignInButton
+export default GoogleSignInButton;

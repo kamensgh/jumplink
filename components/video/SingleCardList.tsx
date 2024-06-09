@@ -1,20 +1,20 @@
+import Link from 'next/link';
 import React from 'react'
 
-function SingleCardList() {
+function SingleCardList({ data }) {
   return (
     <>
-      <div className="slider-inner">
-        <div className="slider-image">
-          <img src="https://picsum.photos/200/300" />
-
-          <div className="slider-badge">2024</div>
-        </div>
-        <div>
-          <div className="slider-text">
-         Taken
+      <Link href={`/movies/${data.id}`}>
+        <div className="slider-inner hover:translate-y-1 transition-all">
+          <div className="slider-image">
+            <img src={data.image} />
+            <div className="slider-badge"> {data.year}</div>
+          </div>
+          <div>
+            <div className="slider-text"> {data.title}</div>
           </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 }

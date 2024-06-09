@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 import GoogleSignInButton from './GoogleSignInButton';
 import { getServerSession } from 'next-auth';
@@ -10,9 +10,10 @@ import { useSession, signIn } from 'next-auth/react';
 
 function LoginPage() {
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const session = useSession();  
+  const session = useSession();
 
   useEffect(() => {
     if (session.status === 'authenticated') {
@@ -23,6 +24,7 @@ function LoginPage() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
+    setError('');
     const email = e.target[0].value;
     const password = e.target[1].value;
 
@@ -41,6 +43,8 @@ function LoginPage() {
       return;
     }
 
+    setLoading(true);
+
     const res = await signIn('credentials', {
       redirect: false,
       email,
@@ -49,9 +53,11 @@ function LoginPage() {
 
     if (res?.error) {
       setError('Invalid email or password');
+      setLoading(false);
       if (res?.url) router.replace('/home');
     } else {
       setError('');
+      setLoading(false);
     }
   };
 
@@ -97,7 +103,7 @@ function LoginPage() {
                     <div>
                       <div className="group relative rounded-lg border focus-within:border-sky-200 px-3 pb-1.5 pt-2.5 duration-200 focus-within:ring focus-within:ring-sky-300/30">
                         <div className="flex justify-between">
-                          <div className="absolute right-3 text-green-200">
+                          <div className="absolute right-3 text-green-200 hidden">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
@@ -116,7 +122,6 @@ function LoginPage() {
                           type="text"
                           name="email"
                           placeholder="Email Address"
-                          autoComplete="off"
                           className="block text-white w-full border-0 bg-transparent p-0 text-sm file:my-1 file:rounded-full file:border-0 file:bg-accent file:px-4 file:py-2 file:font-medium placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 sm:leading-7 text-foreground"
                         />
                       </div>
@@ -126,7 +131,7 @@ function LoginPage() {
                     <div>
                       <div className="group relative rounded-lg border focus-within:border-sky-200 px-3 pb-1.5 pt-2.5 duration-200 focus-within:ring focus-within:ring-sky-300/30">
                         <div className="flex justify-between">
-                          <div className="absolute right-3 text-green-200">
+                          <div className="absolute right-3 text-green-200 hidden">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
@@ -179,12 +184,14 @@ function LoginPage() {
                   <div>
                     <p className=" text-red-700">
                       {error && error}{' '}
-                      {session.status === 'loading' && 'Loading...'}
+                      {/* {session.status === 'loading' && 'Loading...'} */}
                     </p>
                   </div>
                   <div className="mt-4 flex items-center justify-end gap-x-2">
                     <Link
-                      className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:ring hover:ring-white h-10 px-4 py-2 duration-200"
+                      className={`inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:ring hover:ring-white h-10 px-4 py-2 duration-200 ${
+                        loading ? 'pointer-events-none' : ''
+                      }`}
                       href="/register"
                     >
                       Register
@@ -192,8 +199,9 @@ function LoginPage() {
                     <button
                       className="font-semibold hover:bg-black hover:text-white hover:ring hover:ring-white transition duration-300 inline-flex items-center justify-center rounded-md text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white text-black h-10 px-4 py-2"
                       type="submit"
+                      disabled={loading}
                     >
-                      Log in
+                      {loading ? 'One sec...' : 'Log in'}
                     </button>
                   </div>
                 </div>

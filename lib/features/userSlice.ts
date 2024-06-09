@@ -1,10 +1,9 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface userState {
   name: string | null | undefined;
   email: string | null | undefined;
-  image: string | null | undefined
+  image: string | null | undefined;
 }
 
 const userSlice = createSlice({
@@ -27,6 +26,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setName , setEmail , setImage} =userSlice.actions;
+export const { setName, setEmail, setImage } = userSlice.actions;
 
 export default userSlice.reducer;
