@@ -1,19 +1,23 @@
 import React from 'react';
-import SingleCardGrid from './SingleCardGrid';
+import SingleCardList from './SingleCardList';
+import { movieType } from '@/lib/utils';
+import { title } from 'process';
 
-function List() {
+function List({ data, title }: IntrinsicAttributes & movieType[]) {
   return (
-    <div>
-      <div className="grid grid-cols-2 gap-4">
-        {[1, 2].map((index: number) => {
-          return <SingleCardGrid key={index} />;
-        })}
+    <>
+      {title && (
+        <h1 className="text-lg md:text-xl text-white font-bold mb-7">
+          {title}
+        </h1>
+      )}
 
-        <div>
-          <SingleCardGrid />
-        </div>
+      <div className="slider-card-outer no-scrollbar">
+        {data.map((movie: movieType, index: any) => {
+          return <SingleCardList key={index} data={movie} />;
+        })}
       </div>
-    </div>
+    </>
   );
 }
 

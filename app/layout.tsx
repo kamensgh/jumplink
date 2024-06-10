@@ -28,8 +28,8 @@ export default async function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <SessionWrapper session={session}>
-            <TopNav />
-            <div className="container">{children}</div>
+            {session && <TopNav />}
+            <div>{children}</div>
           </SessionWrapper>
         </body>
       </html>

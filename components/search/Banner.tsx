@@ -7,7 +7,7 @@ const Banner = () => {
         <input
           type="text"
           className="w-full h-14 px-4 lg:px-6 rounded-s-full rounded-e-full"
-          placeholder="Search"
+          placeholder="Search for movies or TV shows..."
         />
       </div>
     </div>

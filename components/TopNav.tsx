@@ -1,26 +1,20 @@
 'use client';
 import React from 'react';
-import { useSession, signIn, signOut } from 'next-auth/react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useSession, signOut } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/lib/store';
 
 function TopNav() {
   const { data: session } = useSession();
-  const router = useRouter();
   const pathname = usePathname();
-
-  const userName = useSelector((state: RootState) => state.user.name);
 
   return (
     <>
-      {session ? (
         <header className="bg-gray-800">
           <nav className="container mx-auto px-6 py-3">
             <div className="flex items-center justify-between">
-              <div className="text-white font-bold text-xl">
-                <a href="#">Logo</a>
+              <div className="text-white text-xl">
+                <p>Welcome, {session?.user?.name || session?.user?.email}!</p>
               </div>
               <div className="hidden md:block">
                 <ul className="flex items-center space-x-8">
@@ -117,7 +111,6 @@ function TopNav() {
             </div>
           </nav>
         </header>
-      ) : null}
     </>
   );
 }
