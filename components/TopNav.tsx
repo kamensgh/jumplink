@@ -32,7 +32,7 @@ function TopNav() {
                     <Link
                       href="/movies"
                       className={`text-white ${
-                        pathname == '/movies' ? 'underline' : ''
+                        pathname.includes('movies') ? 'underline' : ''
                       }`}
                     >
                       Movies
