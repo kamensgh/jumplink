@@ -50,6 +50,13 @@ Start the server
   yarn dev
 ```
 
+Start api server
+
+```bash
+  npx json-server --port 3004 movies.json
+```
+
+
 
 ## Contributing
 
