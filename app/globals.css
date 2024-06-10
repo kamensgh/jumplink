@@ -76,7 +76,7 @@
 
   .slider-card-outer{
     @apply 
-    mb-10
+    mb-16
     overflow-x-auto
     rounded-lg
     bg-black
@@ -88,6 +88,7 @@
    .slider-inner{
       @apply 
       lg:min-w-52
+      min-w-40
      
     }
 
